@@ -1,9 +1,9 @@
-/*! UIkit 3.0.0-rc.17 | http://www.getuikit.com | (c) 2014 - 2018 YOOtheme | MIT License */
+/*! persosa-ukUIkit 3.0.0-rc.17 | http://www.getuikit.com | (c) 2014 - 2018 YOOtheme | MIT License */
 
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define('uikit', factory) :
-    (global.UIkit = factory());
+    (global.persosa-ukUIkit = factory());
 }(this, (function () { 'use strict';
 
     function bind(fn, context) {
@@ -232,7 +232,7 @@
         if ( min === void 0 ) min = 0;
         if ( max === void 0 ) max = 1;
 
-        return Math.min(Math.max(number, min), max);
+        return Math.min(Math.max(toNumber(number) || 0, min), max);
     }
 
     function noop() {}
@@ -407,7 +407,7 @@
                 }
 
                 if (!ctx.id) {
-                    ctx.id = "uk-" + (Date.now()) + i;
+                    ctx.id = "persosa-uk-" + (Date.now()) + i;
                     removes.push(function () { return removeAttr(ctx, 'id'); });
                 }
 
@@ -1312,16 +1312,16 @@
         var docEl = document.documentElement;
 
         if (!isIE) {
-            return getStyles(docEl).getPropertyValue(("--uk-" + name));
+            return getStyles(docEl).getPropertyValue(("--persosa-uk-" + name));
         }
 
         if (!(name in vars)) {
 
-            /* usage in css: .uk-name:before { content:"xyz" } */
+            /* usage in css: .persosa-uk-name:before { content:"xyz" } */
 
             var element = append(docEl, document.createElement('div'));
 
-            addClass(element, ("uk-" + name));
+            addClass(element, ("persosa-uk-" + name));
 
             vars[name] = getStyle(element, 'content', ':before').replace(/^["'](.*)["']$/, '$1');
 
@@ -1386,7 +1386,7 @@
                     var type = ref.type;
 
                     clearTimeout(timer);
-                    removeClass(element, 'uk-transition');
+                    removeClass(element, 'persosa-uk-transition');
                     css(element, {
                         'transition-property': '',
                         'transition-duration': '',
@@ -1399,7 +1399,7 @@
                     return element === target;
                 });
 
-                addClass(element, 'uk-transition');
+                addClass(element, 'persosa-uk-transition');
                 css(element, assign({
                     'transition-property': Object.keys(props).map(propName).join(','),
                     'transition-duration': (duration + "ms"),
@@ -1425,13 +1425,13 @@
         },
 
         inProgress: function(element) {
-            return hasClass(element, 'uk-transition');
+            return hasClass(element, 'persosa-uk-transition');
         }
 
     };
 
-    var animationPrefix = 'uk-animation-';
-    var clsCancelAnimation = 'uk-cancel-animation';
+    var animationPrefix = 'persosa-uk-animation-';
+    var clsCancelAnimation = 'persosa-uk-cancel-animation';
 
     function animate(element, animation, duration, origin, out) {
         var arguments$1 = arguments;
@@ -1452,7 +1452,7 @@
                 if (startsWith(animation, animationPrefix)) {
 
                     if (origin) {
-                        cls += " uk-transform-origin-" + origin;
+                        cls += " persosa-uk-transform-origin-" + origin;
                     }
 
                     if (out) {
@@ -2579,6 +2579,7 @@
         isInView: isInView,
         scrolledOver: scrolledOver,
         scrollTop: scrollTop,
+        offsetPosition: offsetPosition,
         isReady: isReady,
         ready: ready,
         index: index,
@@ -2680,30 +2681,30 @@
         getPos: getPos$1
     });
 
-    function componentAPI (UIkit) {
+    function componentAPI (persosa-ukUIkit) {
 
-        var DATA = UIkit.data;
+        var DATA = persosa-ukUIkit.data;
 
         var components = {};
 
-        UIkit.component = function (name, options) {
+        persosa-ukUIkit.component = function (name, options) {
 
             if (!options) {
 
                 if (isPlainObject(components[name])) {
-                    components[name] = UIkit.extend(components[name]);
+                    components[name] = persosa-ukUIkit.extend(components[name]);
                 }
 
                 return components[name];
 
             }
 
-            UIkit[name] = function (element, data$$1) {
+            persosa-ukUIkit[name] = function (element, data$$1) {
                 var i = arguments.length, argsArray = Array(i);
                 while ( i-- ) argsArray[i] = arguments[i];
 
 
-                var component = UIkit.component(name);
+                var component = persosa-ukUIkit.component(name);
 
                 if (isPlainObject(element)) {
                     return new component({data: element});
@@ -2717,7 +2718,7 @@
 
                 function init(element) {
 
-                    var instance = UIkit.getComponent(element, name);
+                    var instance = persosa-ukUIkit.getComponent(element, name);
 
                     if (instance) {
                         if (!data$$1) {
@@ -2738,21 +2739,21 @@
             opt.name = name;
 
             if (opt.install) {
-                opt.install(UIkit, opt, name);
+                opt.install(persosa-ukUIkit, opt, name);
             }
 
-            if (UIkit._initialized && !opt.functional) {
+            if (persosa-ukUIkit._initialized && !opt.functional) {
                 var id = hyphenate(name);
-                fastdom.read(function () { return UIkit[name](("[uk-" + id + "],[data-uk-" + id + "]")); });
+                fastdom.read(function () { return persosa-ukUIkit[name](("[persosa-uk-" + id + "],[data-persosa-uk-" + id + "]")); });
             }
 
             return components[name] = isPlainObject(options) ? opt : options;
         };
 
-        UIkit.getComponents = function (element) { return element && element[DATA] || {}; };
-        UIkit.getComponent = function (element, name) { return UIkit.getComponents(element)[name]; };
+        persosa-ukUIkit.getComponents = function (element) { return element && element[DATA] || {}; };
+        persosa-ukUIkit.getComponent = function (element, name) { return persosa-ukUIkit.getComponents(element)[name]; };
 
-        UIkit.connect = function (node) {
+        persosa-ukUIkit.connect = function (node) {
 
             if (node[DATA]) {
                 for (var name in node[DATA]) {
@@ -2765,14 +2766,14 @@
                 var name$1 = getComponentName(node.attributes[i].name);
 
                 if (name$1 && name$1 in components) {
-                    UIkit[name$1](node);
+                    persosa-ukUIkit[name$1](node);
                 }
 
             }
 
         };
 
-        UIkit.disconnect = function (node) {
+        persosa-ukUIkit.disconnect = function (node) {
             for (var name in node[DATA]) {
                 node[DATA][name]._callDisconnected();
             }
@@ -2781,15 +2782,15 @@
     }
 
     function getComponentName(attribute) {
-        return startsWith(attribute, 'uk-') || startsWith(attribute, 'data-uk-')
-            ? camelize(attribute.replace('data-uk-', '').replace('uk-', ''))
+        return startsWith(attribute, 'persosa-uk-') || startsWith(attribute, 'data-persosa-uk-')
+            ? camelize(attribute.replace('data-persosa-uk-', '').replace('persosa-uk-', ''))
             : false;
     }
 
-    function boot (UIkit) {
+    function boot (persosa-ukUIkit) {
 
-        var connect = UIkit.connect;
-        var disconnect = UIkit.disconnect;
+        var connect = persosa-ukUIkit.connect;
+        var disconnect = persosa-ukUIkit.disconnect;
 
         if (!('MutationObserver' in window)) {
             return;
@@ -2825,7 +2826,7 @@
                 attributes: true
             });
 
-            UIkit._initialized = true;
+            persosa-ukUIkit._initialized = true;
         }
 
         function applyMutation(mutation) {
@@ -2837,7 +2838,7 @@
                 ? applyChildList(mutation)
                 : applyAttribute(mutation);
 
-            update && UIkit.update(target);
+            update && persosa-ukUIkit.update(target);
 
         }
 
@@ -2852,16 +2853,16 @@
 
             var name = getComponentName(attributeName);
 
-            if (!name || !(name in UIkit)) {
+            if (!name || !(name in persosa-ukUIkit)) {
                 return;
             }
 
             if (hasAttr(target, attributeName)) {
-                UIkit[name](target);
+                persosa-ukUIkit[name](target);
                 return true;
             }
 
-            var component = UIkit.getComponent(target, name);
+            var component = persosa-ukUIkit.getComponent(target, name);
 
             if (component) {
                 component.$destroy();
@@ -2888,7 +2889,7 @@
 
         function apply$$1(node, fn) {
 
-            if (node.nodeType !== 1 || hasAttr(node, 'uk-no-boot')) {
+            if (node.nodeType !== 1 || hasAttr(node, 'persosa-uk-no-boot')) {
                 return;
             }
 
@@ -2903,11 +2904,11 @@
 
     }
 
-    function globalAPI (UIkit) {
+    function globalAPI (persosa-ukUIkit) {
 
-        var DATA = UIkit.data;
+        var DATA = persosa-ukUIkit.data;
 
-        UIkit.use = function (plugin) {
+        persosa-ukUIkit.use = function (plugin) {
 
             if (plugin.installed) {
                 return;
@@ -2919,17 +2920,17 @@
             return this;
         };
 
-        UIkit.mixin = function (mixin, component) {
-            component = (isString(component) ? UIkit.component(component) : component) || this;
+        persosa-ukUIkit.mixin = function (mixin, component) {
+            component = (isString(component) ? persosa-ukUIkit.component(component) : component) || this;
             component.options = mergeOptions(component.options, mixin);
         };
 
-        UIkit.extend = function (options) {
+        persosa-ukUIkit.extend = function (options) {
 
             options = options || {};
 
             var Super = this;
-            var Sub = function UIkitComponent (options) {
+            var Sub = function persosa-ukUIkitComponent (options) {
                 this._init(options);
             };
 
@@ -2943,7 +2944,7 @@
             return Sub;
         };
 
-        UIkit.update = function (element, e) {
+        persosa-ukUIkit.update = function (element, e) {
 
             e = createEvent(e || 'update');
             element = element ? toNode(element) : document.body;
@@ -2954,7 +2955,7 @@
         };
 
         var container;
-        Object.defineProperty(UIkit, 'container', {
+        Object.defineProperty(persosa-ukUIkit, 'container', {
 
             get: function() {
                 return container || document.body;
@@ -2995,9 +2996,9 @@
 
     }
 
-    function hooksAPI (UIkit) {
+    function hooksAPI (persosa-ukUIkit) {
 
-        UIkit.prototype._callHook = function (hook) {
+        persosa-ukUIkit.prototype._callHook = function (hook) {
             var this$1 = this;
 
 
@@ -3008,7 +3009,7 @@
             }
         };
 
-        UIkit.prototype._callConnected = function () {
+        persosa-ukUIkit.prototype._callConnected = function () {
 
             if (this._connected) {
                 return;
@@ -3027,7 +3028,7 @@
             this._callUpdate();
         };
 
-        UIkit.prototype._callDisconnected = function () {
+        persosa-ukUIkit.prototype._callDisconnected = function () {
 
             if (!this._connected) {
                 return;
@@ -3047,7 +3048,7 @@
 
         };
 
-        UIkit.prototype._callUpdate = function (e) {
+        persosa-ukUIkit.prototype._callUpdate = function (e) {
             var this$1 = this;
 
 
@@ -3106,11 +3107,11 @@
 
     }
 
-    function stateAPI (UIkit) {
+    function stateAPI (persosa-ukUIkit) {
 
         var uid = 0;
 
-        UIkit.prototype._init = function (options) {
+        persosa-ukUIkit.prototype._init = function (options) {
 
             options = options || {};
             options.data = normalizeData(options, this.constructor.options);
@@ -3133,7 +3134,7 @@
             }
         };
 
-        UIkit.prototype._initData = function () {
+        persosa-ukUIkit.prototype._initData = function () {
             var this$1 = this;
 
 
@@ -3145,7 +3146,7 @@
             }
         };
 
-        UIkit.prototype._initMethods = function () {
+        persosa-ukUIkit.prototype._initMethods = function () {
             var this$1 = this;
 
 
@@ -3159,7 +3160,7 @@
             }
         };
 
-        UIkit.prototype._initComputeds = function () {
+        persosa-ukUIkit.prototype._initComputeds = function () {
             var this$1 = this;
 
 
@@ -3175,11 +3176,11 @@
             }
         };
 
-        UIkit.prototype._resetComputeds = function () {
+        persosa-ukUIkit.prototype._resetComputeds = function () {
             this._computeds = {};
         };
 
-        UIkit.prototype._initProps = function (props) {
+        persosa-ukUIkit.prototype._initProps = function (props) {
             var this$1 = this;
 
 
@@ -3203,7 +3204,7 @@
             }
         };
 
-        UIkit.prototype._initEvents = function () {
+        persosa-ukUIkit.prototype._initEvents = function () {
             var this$1 = this;
 
 
@@ -3226,12 +3227,12 @@
             }
         };
 
-        UIkit.prototype._unbindEvents = function () {
+        persosa-ukUIkit.prototype._unbindEvents = function () {
             this._events.forEach(function (unbind) { return unbind(); });
             this._events = [];
         };
 
-        UIkit.prototype._initObserver = function () {
+        persosa-ukUIkit.prototype._initObserver = function () {
             var this$1 = this;
 
 
@@ -3441,11 +3442,11 @@
         }
     }
 
-    function instanceAPI (UIkit) {
+    function instanceAPI (persosa-ukUIkit) {
 
-        var DATA = UIkit.data;
+        var DATA = persosa-ukUIkit.data;
 
-        UIkit.prototype.$mount = function (el) {
+        persosa-ukUIkit.prototype.$mount = function (el) {
 
             var ref = this.$options;
             var name = ref.name;
@@ -3467,16 +3468,16 @@
             }
         };
 
-        UIkit.prototype.$emit = function (e) {
+        persosa-ukUIkit.prototype.$emit = function (e) {
             this._callUpdate(e);
         };
 
-        UIkit.prototype.$reset = function () {
+        persosa-ukUIkit.prototype.$reset = function () {
             this._callDisconnected();
             this._callConnected();
         };
 
-        UIkit.prototype.$destroy = function (removeEl) {
+        persosa-ukUIkit.prototype.$destroy = function (removeEl) {
             if ( removeEl === void 0 ) removeEl = false;
 
 
@@ -3505,17 +3506,17 @@
             }
         };
 
-        UIkit.prototype.$create = function (component, element, data$$1) {
-            return UIkit[component](element, data$$1);
+        persosa-ukUIkit.prototype.$create = function (component, element, data$$1) {
+            return persosa-ukUIkit[component](element, data$$1);
         };
 
-        UIkit.prototype.$update = UIkit.update;
-        UIkit.prototype.$getComponent = UIkit.getComponent;
+        persosa-ukUIkit.prototype.$update = persosa-ukUIkit.update;
+        persosa-ukUIkit.prototype.$getComponent = persosa-ukUIkit.getComponent;
 
         var names = {};
-        Object.defineProperties(UIkit.prototype, {
+        Object.defineProperties(persosa-ukUIkit.prototype, {
 
-            $container: Object.getOwnPropertyDescriptor(UIkit, 'container'),
+            $container: Object.getOwnPropertyDescriptor(persosa-ukUIkit, 'container'),
 
             $name: {
 
@@ -3524,7 +3525,7 @@
                     var name = ref.name;
 
                     if (!names[name]) {
-                        names[name] = UIkit.prefix + hyphenate(name);
+                        names[name] = persosa-ukUIkit.prefix + hyphenate(name);
                     }
 
                     return names[name];
@@ -3536,25 +3537,25 @@
 
     }
 
-    var UIkit = function (options) {
+    var persosa-ukUIkit = function (options) {
         this._init(options);
     };
 
-    UIkit.util = util;
-    UIkit.data = '__uikit__';
-    UIkit.prefix = 'uk-';
-    UIkit.options = {};
+    persosa-ukUIkit.util = util;
+    persosa-ukUIkit.data = '__uikit__';
+    persosa-ukUIkit.prefix = 'persosa-uk-';
+    persosa-ukUIkit.options = {};
 
-    globalAPI(UIkit);
-    hooksAPI(UIkit);
-    stateAPI(UIkit);
-    componentAPI(UIkit);
-    instanceAPI(UIkit);
+    globalAPI(persosa-ukUIkit);
+    hooksAPI(persosa-ukUIkit);
+    stateAPI(persosa-ukUIkit);
+    componentAPI(persosa-ukUIkit);
+    instanceAPI(persosa-ukUIkit);
 
     var Class = {
 
         connected: function() {
-            addClass(this.$el, this.$name);
+            !hasClass(this.$el, this.$name) && addClass(this.$el, this.$name);
         }
 
     };
@@ -3638,7 +3639,7 @@
                         var body = document.body;
                         var scroll = body.scrollTop;
                         var el = toggled[0];
-                        var inProgress = Animation.inProgress(el) && hasClass(el, 'uk-animation-leave')
+                        var inProgress = Animation.inProgress(el) && hasClass(el, 'persosa-uk-animation-leave')
                                 || Transition.inProgress(el) && el.style.height === '0px';
 
                         p = all(toggled);
@@ -3684,7 +3685,7 @@
                 show = isBoolean(show)
                     ? show
                     : Animation.inProgress(el)
-                        ? hasClass(el, 'uk-animation-leave')
+                        ? hasClass(el, 'persosa-uk-animation-leave')
                         : Transition.inProgress(el)
                             ? el.style.height === '0px'
                             : !this.isToggled(el);
@@ -3693,19 +3694,24 @@
                     return Promise.reject();
                 }
 
-                var promise = (animate$$1 === false || !this.hasAnimation
-                    ? this._toggleImmediate
-                    : this.hasTransition
-                        ? this._toggleHeight
-                        : this._toggleAnimation
+                var promise = (
+                    isFunction(animate$$1)
+                        ? animate$$1
+                        : animate$$1 === false || !this.hasAnimation
+                            ? this._toggle
+                            : this.hasTransition
+                                ? toggleHeight(this)
+                                : toggleAnimation(this)
                 )(el, show);
 
                 trigger(el, show ? 'show' : 'hide', [this]);
 
-                return promise.then(function () {
+                var final = function () {
                     trigger(el, show ? 'shown' : 'hidden', [this$1]);
                     this$1.$update(el);
-                });
+                };
+
+                return promise ? promise.then(final) : Promise.resolve(final());
             },
 
             _toggle: function(el, toggled) {
@@ -3727,59 +3733,66 @@
 
                 this.updateAria(el);
                 changed && this.$update(el);
-            },
-
-            _toggleImmediate: function(el, show) {
-                this._toggle(el, show);
-                return Promise.resolve();
-            },
-
-            _toggleHeight: function(el, show) {
-                var this$1 = this;
-
-
-                var inProgress = Transition.inProgress(el);
-                var inner = el.hasChildNodes ? toFloat(css(el.firstElementChild, 'marginTop')) + toFloat(css(el.lastElementChild, 'marginBottom')) : 0;
-                var currentHeight = isVisible(el) ? height(el) + (inProgress ? 0 : inner) : 0;
-
-                Transition.cancel(el);
-
-                if (!this.isToggled(el)) {
-                    this._toggle(el, true);
-                }
-
-                height(el, '');
-
-                // Update child components first
-                fastdom.flush();
-
-                var endHeight = height(el) + (inProgress ? 0 : inner);
-                height(el, currentHeight);
-
-                return (show
-                    ? Transition.start(el, assign({}, this.initProps, {overflow: 'hidden', height: endHeight}), Math.round(this.duration * (1 - currentHeight / endHeight)), this.transition)
-                    : Transition.start(el, this.hideProps, Math.round(this.duration * (currentHeight / endHeight)), this.transition).then(function () { return this$1._toggle(el, false); })
-                ).then(function () { return css(el, this$1.initProps); });
-
-            },
-
-            _toggleAnimation: function(el, show) {
-                var this$1 = this;
-
-
-                Animation.cancel(el);
-
-                if (show) {
-                    this._toggle(el, true);
-                    return Animation.in(el, this.animation[0], this.duration, this.origin);
-                }
-
-                return Animation.out(el, this.animation[1] || this.animation[0], this.duration, this.origin).then(function () { return this$1._toggle(el, false); });
             }
 
         }
 
     };
+
+    function toggleHeight(ref) {
+        var isToggled = ref.isToggled;
+        var duration = ref.duration;
+        var initProps = ref.initProps;
+        var hideProps = ref.hideProps;
+        var transition$$1 = ref.transition;
+        var _toggle = ref._toggle;
+
+        return function (el, show) {
+
+            var inProgress = Transition.inProgress(el);
+            var inner = el.hasChildNodes ? toFloat(css(el.firstElementChild, 'marginTop')) + toFloat(css(el.lastElementChild, 'marginBottom')) : 0;
+            var currentHeight = isVisible(el) ? height(el) + (inProgress ? 0 : inner) : 0;
+
+            Transition.cancel(el);
+
+            if (!isToggled(el)) {
+                _toggle(el, true);
+            }
+
+            height(el, '');
+
+            // Update child components first
+            fastdom.flush();
+
+            var endHeight = height(el) + (inProgress ? 0 : inner);
+            height(el, currentHeight);
+
+            return (show
+                    ? Transition.start(el, assign({}, initProps, {overflow: 'hidden', height: endHeight}), Math.round(duration * (1 - currentHeight / endHeight)), transition$$1)
+                    : Transition.start(el, hideProps, Math.round(duration * (currentHeight / endHeight)), transition$$1).then(function () { return _toggle(el, false); })
+            ).then(function () { return css(el, initProps); });
+
+        };
+    }
+
+    function toggleAnimation(ref) {
+        var animation = ref.animation;
+        var duration = ref.duration;
+        var origin = ref.origin;
+        var _toggle = ref._toggle;
+
+        return function (el, show) {
+
+            Animation.cancel(el);
+
+            if (show) {
+                _toggle(el, true);
+                return Animation.in(el, animation[0], duration, origin);
+            }
+
+            return Animation.out(el, animation[1] || animation[0], duration, origin).then(function () { return _toggle(el, false); });
+        };
+    }
 
     var Accordion = {
 
@@ -3801,9 +3814,9 @@
             animation: [true],
             collapsible: true,
             multiple: false,
-            clsOpen: 'uk-open',
-            toggle: '> .uk-accordion-title',
-            content: '> .uk-accordion-content',
+            clsOpen: 'persosa-uk-open',
+            toggle: '> .persosa-uk-accordion-title',
+            content: '> .persosa-uk-accordion-content',
             transition: 'ease'
         },
 
@@ -3852,7 +3865,7 @@
             var this$1 = this;
 
 
-            this.items.forEach(function (el) { return this$1._toggleImmediate($(this$1.content, el), hasClass(el, this$1.clsOpen)); });
+            this.items.forEach(function (el) { return this$1._toggle($(this$1.content, el), hasClass(el, this$1.clsOpen)); });
 
             var active = !this.collapsible && !hasClass(this.items, this.clsOpen) && this.items[0];
             if (active) {
@@ -3891,17 +3904,20 @@
                             attr(el._wrapper, 'hidden', state ? '' : null);
                         }
 
-                        this$1._toggleImmediate(content, true);
+                        this$1._toggle(content, true);
                         this$1.toggleElement(el._wrapper, state, animate$$1).then(function () {
-                            if (hasClass(el, this$1.clsOpen) === state) {
 
-                                if (!state) {
-                                    this$1._toggleImmediate(content, false);
-                                }
-
-                                el._wrapper = null;
-                                unwrap(content);
+                            if (hasClass(el, this$1.clsOpen) !== state) {
+                                return;
                             }
+
+                            if (!state) {
+                                this$1._toggle(content, false);
+                            }
+
+                            el._wrapper = null;
+                            unwrap(content);
+
                         });
 
                     });
@@ -3923,7 +3939,7 @@
 
         data: {
             animation: [true],
-            selClose: '.uk-alert-close',
+            selClose: '.persosa-uk-alert-close',
             duration: 150,
             hideProps: assign({opacity: 0}, Togglable.data.hideProps)
         },
@@ -3959,32 +3975,32 @@
 
     };
 
-    function Core (UIkit) {
+    function Core (persosa-ukUIkit) {
 
         ready(function () {
 
-            UIkit.update();
+            persosa-ukUIkit.update();
 
             var scroll = 0;
             var started = 0;
 
-            on(window, 'load resize', function (e) { return UIkit.update(null, e); });
+            on(window, 'load resize', function (e) { return persosa-ukUIkit.update(null, e); });
             on(window, 'scroll', function (e) {
                 var target = e.target;
                 e.dir = scroll <= window.pageYOffset ? 'down' : 'up';
                 e.pageYOffset = scroll = window.pageYOffset;
-                UIkit.update(target.nodeType !== 1 ? document.body : target, e);
+                persosa-ukUIkit.update(target.nodeType !== 1 ? document.body : target, e);
             }, {passive: true, capture: true});
             on(document, 'loadedmetadata load', function (ref) {
                 var target = ref.target;
 
-                return UIkit.update(target, 'load');
+                return persosa-ukUIkit.update(target, 'load');
             }, true);
 
             on(document, 'animationstart', function (ref) {
                 var target = ref.target;
 
-                if ((css(target, 'animationName') || '').match(/^uk-.*(left|right)/)) {
+                if ((css(target, 'animationName') || '').match(/^persosa-uk-.*(left|right)/)) {
 
                     started++;
                     css(document.body, 'overflowX', 'hidden');
@@ -4000,7 +4016,7 @@
                 return;
             }
 
-            var cls = 'uk-hover';
+            var cls = 'persosa-uk-hover';
 
             on(document, 'tap', function (ref) {
                     var target = ref.target;
@@ -4010,7 +4026,7 @@
             }
             );
 
-            Object.defineProperty(UIkit, 'hoverSelector', {
+            Object.defineProperty(persosa-ukUIkit, 'hoverSelector', {
 
                 set: function(selector) {
                     on(document, 'tap', selector, function (ref) {
@@ -4022,7 +4038,7 @@
 
             });
 
-            UIkit.hoverSelector = '.uk-animation-toggle, .uk-transition-toggle, [uk-hover]';
+            persosa-ukUIkit.hoverSelector = '.persosa-uk-animation-toggle, .persosa-uk-transition-toggle, [persosa-uk-hover]';
 
         });
 
@@ -4205,6 +4221,7 @@
                 var node;
                 var ref = this;
                 var offset$$1 = ref.offset;
+                var axis = this.getAxis();
 
                 offset$$1 = isNumeric(offset$$1)
                     ? offset$$1
@@ -4212,7 +4229,6 @@
                         ? offset(node)[axis === 'x' ? 'left' : 'top'] - offset(target)[axis === 'x' ? 'right' : 'bottom']
                         : 0;
 
-                var axis = this.getAxis();
                 var ref$1 = positionAt(
                     element,
                     target,
@@ -4268,8 +4284,8 @@
             delayHide: 800,
             clsDrop: false,
             hoverIdle: 200,
-            animation: ['uk-animation-fade'],
-            cls: 'uk-open'
+            animation: ['persosa-uk-animation-fade'],
+            cls: 'persosa-uk-open'
         },
 
         computed: {
@@ -4283,7 +4299,7 @@
             clsDrop: function(ref) {
                 var clsDrop = ref.clsDrop;
 
-                return clsDrop || ("uk-" + (this.$options.name));
+                return clsDrop || ("persosa-uk-" + (this.$options.name));
             },
 
             clsPos: function() {
@@ -4765,7 +4781,7 @@
                     if (current === this.input) {
                         toggleClass(
                             this.state,
-                            ("uk-" + (includes(type, 'focus') ? 'focus' : 'hover')),
+                            ("persosa-uk-" + (includes(type, 'focus') ? 'focus' : 'hover')),
                             includes(['focusin', 'mouseenter'], type)
                         );
                     }
@@ -4820,8 +4836,8 @@
         },
 
         data: {
-            margin: 'uk-margin-small-top',
-            firstColumn: 'uk-first-column'
+            margin: 'persosa-uk-margin-small-top',
+            firstColumn: 'persosa-uk-first-column'
         },
 
         update: {
@@ -4880,7 +4896,13 @@
                     break;
                 }
 
-                var leftDim = getOffset(row[0]);
+                var leftDim = (void 0);
+                if (row[0].offsetParent === el.offsetParent) {
+                    leftDim = getOffset(row[0]);
+                } else {
+                    dim = getOffset(el, true);
+                    leftDim = getOffset(row[0], true);
+                }
 
                 if (dim.top >= leftDim.bottom - 1) {
                     rows.push([el]);
@@ -4911,11 +4933,18 @@
 
     }
 
-    function getOffset(element) {
+    function getOffset(element, offset$$1) {
+        var assign$$1;
+
+        if ( offset$$1 === void 0 ) offset$$1 = false;
 
         var offsetTop = element.offsetTop;
         var offsetLeft = element.offsetLeft;
         var offsetHeight = element.offsetHeight;
+
+        if (offset$$1) {
+            (assign$$1 = offsetPosition(element), offsetTop = assign$$1[0], offsetLeft = assign$$1[1]);
+        }
 
         return {
             top: offsetTop,
@@ -4939,8 +4968,8 @@
         },
 
         data: {
-            margin: 'uk-grid-margin',
-            clsStack: 'uk-grid-stack',
+            margin: 'persosa-uk-grid-margin',
+            clsStack: 'persosa-uk-grid-stack',
             masonry: false,
             parallax: 0
         },
@@ -4960,7 +4989,7 @@
         },
 
         connected: function() {
-            this.masonry && addClass(this.$el, 'uk-flex-top uk-flex-wrap-top');
+            this.masonry && addClass(this.$el, 'persosa-uk-flex-top persosa-uk-flex-wrap-top');
         },
 
         update: [
@@ -4975,7 +5004,7 @@
                         rows = rows.map(function (elements) { return sortBy(elements, 'offsetLeft'); });
                     }
 
-                    var hasStaticContent = rows.some(function (elements) { return elements.some(function (element) { return css(element, 'position') === 'static'; }); });
+                    var hasStaticContent = rows.some(function (elements) { return elements.some(function (element) { return element.style.position === 'static'; }); });
                     var translates = false;
                     var elHeight = '';
 
@@ -5198,7 +5227,7 @@
             ((assign$$1 = getHeights(elements), heights = assign$$1.heights, max = assign$$1.max));
         }
 
-        heights = elements.map(function (el, i) { return heights[i] === max && toFloat(el.style.minHeight) !== max ? '' : max; }
+        heights = elements.map(function (el, i) { return heights[i] === max && toFloat(el.style.minHeight).toFixed(2) !== max.toFixed(2) ? '' : max; }
         );
 
         return {heights: heights, elements: elements};
@@ -5327,7 +5356,7 @@
             var assign$$1;
 
 
-            this.class += ' uk-svg';
+            this.class += ' persosa-uk-svg';
 
             if (!this.icon && includes(this.src, '#')) {
 
@@ -5561,7 +5590,7 @@
         isIcon: true,
 
         connected: function() {
-            addClass(this.$el, 'uk-icon');
+            addClass(this.$el, 'persosa-uk-icon');
         },
 
         methods: {
@@ -5596,7 +5625,7 @@
         extends: IconComponent,
 
         connected: function() {
-            addClass(this.$el, 'uk-slidenav');
+            addClass(this.$el, 'persosa-uk-slidenav');
         },
 
         computed: {
@@ -5604,7 +5633,7 @@
             icon: function(ref, $el) {
                 var icon = ref.icon;
 
-                return hasClass($el, 'uk-slidenav-large')
+                return hasClass($el, 'persosa-uk-slidenav-large')
                     ? (icon + "-large")
                     : icon;
             }
@@ -5622,9 +5651,9 @@
             icon: function(ref, $el) {
                 var icon = ref.icon;
 
-                return hasClass($el, 'uk-search-icon') && parents($el, '.uk-search-large').length
+                return hasClass($el, 'persosa-uk-search-icon') && parents($el, '.persosa-uk-search-large').length
                     ? 'search-large'
-                    : parents($el, '.uk-search-navbar').length
+                    : parents($el, '.persosa-uk-search-navbar').length
                         ? 'search-navbar'
                         : icon;
             }
@@ -5640,7 +5669,7 @@
         computed: {
 
             icon: function() {
-                return ("close-" + (hasClass(this.$el, 'uk-close-large') ? 'large' : 'icon'));
+                return ("close-" + (hasClass(this.$el, 'persosa-uk-close-large') ? 'large' : 'icon'));
             }
 
         }
@@ -5659,8 +5688,8 @@
 
     };
 
-    function install(UIkit) {
-        UIkit.icon.add = function (name, svg) {
+    function install(persosa-ukUIkit) {
+        persosa-ukUIkit.icon.add = function (name, svg) {
             var obj;
 
 
@@ -5670,8 +5699,8 @@
                 delete parsed[name];
             });
 
-            if (UIkit._initialized) {
-                apply(document.body, function (el) { return each(UIkit.getComponents(el), function (cmp) { return cmp.$options.isIcon && cmp.icon in added && cmp.$reset(); }
+            if (persosa-ukUIkit._initialized) {
+                apply(document.body, function (el) { return each(persosa-ukUIkit.getComponents(el), function (cmp) { return cmp.$options.isIcon && cmp.icon in added && cmp.$reset(); }
                     ); }
                 );
             }
@@ -5971,8 +6000,8 @@
 
         data: {
             fill: '',
-            clsWrapper: 'uk-leader-fill',
-            clsHide: 'uk-leader-hide',
+            clsWrapper: 'persosa-uk-leader-fill',
+            clsHide: 'persosa-uk-leader-hide',
             attrFill: 'data-fill'
         },
 
@@ -6068,7 +6097,7 @@
         },
 
         data: {
-            cls: 'uk-open',
+            cls: 'persosa-uk-open',
             escClose: true,
             bgClose: true,
             overlay: true,
@@ -6087,16 +6116,18 @@
                 return this.panel;
             },
 
-            transitionDuration: function() {
-                return toMs(css(this.transitionElement, 'transitionDuration'));
-            },
-
             bgClose: function(ref) {
                 var bgClose = ref.bgClose;
 
                 return bgClose && this.panel;
             }
 
+        },
+
+        beforeDisconnect: function() {
+            if (this.isToggled()) {
+                this.toggleNow(this.$el, false);
+            }
         },
 
         events: [
@@ -6251,32 +6282,17 @@
                     this._callConnected();
                 }
 
-                return this.toggleNow(this.$el, true);
+                return this.toggleElement(this.$el, true, animate$1(this));
             },
 
             hide: function() {
                 return this.isToggled()
-                    ? this.toggleNow(this.$el, false)
+                    ? this.toggleElement(this.$el, false, animate$1(this))
                     : Promise.resolve();
             },
 
             getActive: function() {
                 return active$1;
-            },
-
-            _toggleImmediate: function(el, show) {
-                var this$1 = this;
-
-                return new Promise(function (resolve) { return requestAnimationFrame(function () {
-                        this$1._toggle(el, show);
-
-                        if (this$1.transitionDuration) {
-                            once(this$1.transitionElement, 'transitionend', resolve, false, function (e) { return e.target === this$1.transitionElement; });
-                        } else {
-                            resolve();
-                        }
-                    }); }
-                );
             }
 
         }
@@ -6314,6 +6330,23 @@
         events = null;
     }
 
+    function animate$1(ref) {
+        var transitionElement = ref.transitionElement;
+        var _toggle = ref._toggle;
+
+        return function (el, show) { return new Promise(function (resolve) { return requestAnimationFrame(function () {
+
+                    _toggle(el, show);
+
+                    if (toMs(css(transitionElement, 'transitionDuration'))) {
+                        once(transitionElement, 'transitionend', resolve, false, function (e) { return e.target === transitionElement; });
+                    } else {
+                        resolve();
+                    }
+                }); }
+            ); };
+    }
+
     var Modal$1 = {
 
         install: install$1,
@@ -6321,9 +6354,9 @@
         mixins: [Modal],
 
         data: {
-            clsPage: 'uk-modal-page',
-            selPanel: '.uk-modal-dialog',
-            selClose: '.uk-modal-close, .uk-modal-close-default, .uk-modal-close-outside, .uk-modal-close-full'
+            clsPage: 'persosa-uk-modal-page',
+            selPanel: '.persosa-uk-modal-dialog',
+            selClose: '.persosa-uk-modal-close, .persosa-uk-modal-close-default, .persosa-uk-modal-close-outside, .persosa-uk-modal-close-full'
         },
 
         events: [
@@ -6335,8 +6368,8 @@
 
                 handler: function() {
 
-                    if (hasClass(this.panel, 'uk-margin-auto-vertical')) {
-                        addClass(this.$el, 'uk-flex');
+                    if (hasClass(this.panel, 'persosa-uk-margin-auto-vertical')) {
+                        addClass(this.$el, 'persosa-uk-flex');
                     } else {
                         css(this.$el, 'display', 'block');
                     }
@@ -6353,7 +6386,7 @@
                 handler: function() {
 
                     css(this.$el, 'display', '');
-                    removeClass(this.$el, 'uk-flex');
+                    removeClass(this.$el, 'persosa-uk-flex');
 
                 }
             }
@@ -6362,11 +6395,11 @@
 
     };
 
-    function install$1 (UIkit) {
+    function install$1 (persosa-ukUIkit) {
 
-        UIkit.modal.dialog = function (content, options) {
+        persosa-ukUIkit.modal.dialog = function (content, options) {
 
-            var dialog = UIkit.modal((" <div class=\"uk-modal\"> <div class=\"uk-modal-dialog\">" + content + "</div> </div> "), options);
+            var dialog = persosa-ukUIkit.modal((" <div class=\"persosa-uk-modal\"> <div class=\"persosa-uk-modal-dialog\">" + content + "</div> </div> "), options);
 
             dialog.show();
 
@@ -6382,22 +6415,22 @@
             return dialog;
         };
 
-        UIkit.modal.alert = function (message, options) {
+        persosa-ukUIkit.modal.alert = function (message, options) {
 
-            options = assign({bgClose: false, escClose: false, labels: UIkit.modal.labels}, options);
+            options = assign({bgClose: false, escClose: false, labels: persosa-ukUIkit.modal.labels}, options);
 
             return new Promise(
-                function (resolve) { return on(UIkit.modal.dialog((" <div class=\"uk-modal-body\">" + (isString(message) ? message : html(message)) + "</div> <div class=\"uk-modal-footer uk-text-right\"> <button class=\"uk-button uk-button-primary uk-modal-close\" autofocus>" + (options.labels.ok) + "</button> </div> "), options).$el, 'hide', resolve); }
+                function (resolve) { return on(persosa-ukUIkit.modal.dialog((" <div class=\"persosa-uk-modal-body\">" + (isString(message) ? message : html(message)) + "</div> <div class=\"persosa-uk-modal-footer persosa-uk-text-right\"> <button class=\"persosa-uk-button persosa-uk-button-primary persosa-uk-modal-close\" autofocus>" + (options.labels.ok) + "</button> </div> "), options).$el, 'hide', resolve); }
             );
         };
 
-        UIkit.modal.confirm = function (message, options) {
+        persosa-ukUIkit.modal.confirm = function (message, options) {
 
-            options = assign({bgClose: false, escClose: true, labels: UIkit.modal.labels}, options);
+            options = assign({bgClose: false, escClose: true, labels: persosa-ukUIkit.modal.labels}, options);
 
             return new Promise(function (resolve, reject) {
 
-                var confirm = UIkit.modal.dialog((" <form> <div class=\"uk-modal-body\">" + (isString(message) ? message : html(message)) + "</div> <div class=\"uk-modal-footer uk-text-right\"> <button class=\"uk-button uk-button-default uk-modal-close\" type=\"button\">" + (options.labels.cancel) + "</button> <button class=\"uk-button uk-button-primary\" autofocus>" + (options.labels.ok) + "</button> </div> </form> "), options);
+                var confirm = persosa-ukUIkit.modal.dialog((" <form> <div class=\"persosa-uk-modal-body\">" + (isString(message) ? message : html(message)) + "</div> <div class=\"persosa-uk-modal-footer persosa-uk-text-right\"> <button class=\"persosa-uk-button persosa-uk-button-default persosa-uk-modal-close\" type=\"button\">" + (options.labels.cancel) + "</button> <button class=\"persosa-uk-button persosa-uk-button-primary\" autofocus>" + (options.labels.ok) + "</button> </div> </form> "), options);
 
                 var resolved = false;
 
@@ -6416,13 +6449,13 @@
             });
         };
 
-        UIkit.modal.prompt = function (message, value, options) {
+        persosa-ukUIkit.modal.prompt = function (message, value, options) {
 
-            options = assign({bgClose: false, escClose: true, labels: UIkit.modal.labels}, options);
+            options = assign({bgClose: false, escClose: true, labels: persosa-ukUIkit.modal.labels}, options);
 
             return new Promise(function (resolve) {
 
-                var prompt = UIkit.modal.dialog((" <form class=\"uk-form-stacked\"> <div class=\"uk-modal-body\"> <label>" + (isString(message) ? message : html(message)) + "</label> <input class=\"uk-input\" autofocus> </div> <div class=\"uk-modal-footer uk-text-right\"> <button class=\"uk-button uk-button-default uk-modal-close\" type=\"button\">" + (options.labels.cancel) + "</button> <button class=\"uk-button uk-button-primary\">" + (options.labels.ok) + "</button> </div> </form> "), options),
+                var prompt = persosa-ukUIkit.modal.dialog((" <form class=\"persosa-uk-form-stacked\"> <div class=\"persosa-uk-modal-body\"> <label>" + (isString(message) ? message : html(message)) + "</label> <input class=\"persosa-uk-input\" autofocus> </div> <div class=\"persosa-uk-modal-footer persosa-uk-text-right\"> <button class=\"persosa-uk-button persosa-uk-button-default persosa-uk-modal-close\" type=\"button\">" + (options.labels.cancel) + "</button> <button class=\"persosa-uk-button persosa-uk-button-primary\">" + (options.labels.ok) + "</button> </div> </form> "), options),
                     input = $('input', prompt.$el);
 
                 input.value = value;
@@ -6444,7 +6477,7 @@
             });
         };
 
-        UIkit.modal.labels = {
+        persosa-ukUIkit.modal.labels = {
             ok: 'Ok',
             cancel: 'Cancel'
         };
@@ -6456,7 +6489,7 @@
         extends: Accordion,
 
         data: {
-            targets: '> .uk-parent',
+            targets: '> .persosa-uk-parent',
             toggle: '> a',
             content: '> ul'
         }
@@ -6484,9 +6517,9 @@
         },
 
         data: {
-            dropdown: '.uk-navbar-nav > li',
+            dropdown: '.persosa-uk-navbar-nav > li',
             align: !isRtl ? 'left' : 'right',
-            clsDrop: 'uk-navbar-dropdown',
+            clsDrop: 'persosa-uk-navbar-dropdown',
             mode: undefined,
             offset: undefined,
             delayShow: undefined,
@@ -6499,7 +6532,7 @@
             dropbarAnchor: false,
             duration: 200,
             forceHeight: true,
-            selMinHeight: '.uk-navbar-nav > li > a, .uk-navbar-item, .uk-navbar-toggle'
+            selMinHeight: '.persosa-uk-navbar-nav > li > a, .persosa-uk-navbar-item, .persosa-uk-navbar-toggle'
         },
 
         computed: {
@@ -6537,14 +6570,14 @@
             var ref = this.$props;
             var dropbar = ref.dropbar;
 
-            this.dropbar = dropbar && (query(dropbar, this.$el) || $('+ .uk-navbar-dropbar', this.$el) || $('<div></div>'));
+            this.dropbar = dropbar && (query(dropbar, this.$el) || $('+ .persosa-uk-navbar-dropbar', this.$el) || $('<div></div>'));
 
             if (this.dropbar) {
 
-                addClass(this.dropbar, 'uk-navbar-dropbar');
+                addClass(this.dropbar, 'persosa-uk-navbar-dropbar');
 
                 if (this.dropbarMode === 'slide') {
-                    addClass(this.dropbar, 'uk-navbar-dropbar-slide');
+                    addClass(this.dropbar, 'persosa-uk-navbar-dropbar-slide');
                 }
             }
 
@@ -6740,20 +6773,20 @@
         },
 
         data: {
-            content: '.uk-offcanvas-content',
+            content: '.persosa-uk-offcanvas-content',
             mode: 'slide',
             flip: false,
             overlay: false,
-            clsPage: 'uk-offcanvas-page',
-            clsContainer: 'uk-offcanvas-container',
-            selPanel: '.uk-offcanvas-bar',
-            clsFlip: 'uk-offcanvas-flip',
-            clsContent: 'uk-offcanvas-content',
-            clsContentAnimation: 'uk-offcanvas-content-animation',
-            clsSidebarAnimation: 'uk-offcanvas-bar-animation',
-            clsMode: 'uk-offcanvas',
-            clsOverlay: 'uk-offcanvas-overlay',
-            selClose: '.uk-offcanvas-close'
+            clsPage: 'persosa-uk-offcanvas-page',
+            clsContainer: 'persosa-uk-offcanvas-container',
+            selPanel: '.persosa-uk-offcanvas-bar',
+            clsFlip: 'persosa-uk-offcanvas-flip',
+            clsContent: 'persosa-uk-offcanvas-content',
+            clsContentAnimation: 'persosa-uk-offcanvas-content-animation',
+            clsSidebarAnimation: 'persosa-uk-offcanvas-bar-animation',
+            clsMode: 'persosa-uk-offcanvas',
+            clsOverlay: 'persosa-uk-offcanvas-overlay',
+            selClose: '.persosa-uk-offcanvas-close'
         },
 
         computed: {
@@ -6975,8 +7008,8 @@
         },
 
         data: {
-            selContainer: '.uk-modal',
-            selContent: '.uk-modal-dialog',
+            selContainer: '.persosa-uk-modal',
+            selContent: '.persosa-uk-modal-dialog',
         },
 
         computed: {
@@ -7034,7 +7067,7 @@
         props: ['width', 'height'],
 
         connected: function() {
-            addClass(this.$el, 'uk-responsive-width');
+            addClass(this.$el, 'persosa-uk-responsive-width');
         },
 
         update: {
@@ -7046,7 +7079,10 @@
             },
 
             write: function(dim) {
-                height(this.$el, Dimensions.contain({height: this.height, width: this.width}, dim).height);
+                height(this.$el, Dimensions.contain({
+                    height: this.height,
+                    width: this.width
+                }, dim).height);
             },
 
             events: ['load', 'resize']
@@ -7152,7 +7188,7 @@
             offsetLeft: 0,
             repeat: false,
             delay: 0,
-            inViewClass: 'uk-scrollspy-inview'
+            inViewClass: 'persosa-uk-scrollspy-inview'
         }); },
 
         computed: {
@@ -7192,7 +7228,7 @@
                         var elData = els[i];
 
                         if (!elData || elData.el !== el) {
-                            var cls = data(el, 'uk-scrollspy-class');
+                            var cls = data(el, 'persosa-uk-scrollspy-class');
                             elData = {el: el, toggles: cls && cls.split(',') || this$1.cls};
                         }
 
@@ -7305,7 +7341,7 @@
         },
 
         data: {
-            cls: 'uk-active',
+            cls: 'persosa-uk-active',
             closest: false,
             scroll: false,
             overflow: true,
@@ -7425,10 +7461,10 @@
             bottom: false,
             offset: 0,
             animation: '',
-            clsActive: 'uk-active',
+            clsActive: 'persosa-uk-active',
             clsInactive: '',
-            clsFixed: 'uk-sticky-fixed',
-            clsBelow: 'uk-sticky-below',
+            clsFixed: 'persosa-uk-sticky-fixed',
+            clsBelow: 'persosa-uk-sticky-below',
             selTarget: '',
             widthElement: false,
             showOnUp: false,
@@ -7452,7 +7488,7 @@
         },
 
         connected: function() {
-            this.placeholder = $('+ .uk-sticky-placeholder', this.$el) || $('<div class="uk-sticky-placeholder"></div>');
+            this.placeholder = $('+ .persosa-uk-sticky-placeholder', this.$el) || $('<div class="persosa-uk-sticky-placeholder"></div>');
         },
 
         disconnected: function() {
@@ -7533,9 +7569,12 @@
 
             {
 
-                read: function(ref) {
+                read: function(ref, ref$1) {
                     var height$$1 = ref.height;
+                    var type = ref$1.type;
 
+
+                    height$$1 = !this.isActive || type === 'resize' ? this.$el.offsetHeight : height$$1;
 
                     this.topOffset = offset(this.isActive ? this.placeholder : this.$el).top;
                     this.bottomOffset = this.topOffset + height$$1;
@@ -7547,7 +7586,7 @@
                     this.inactive = !this.matchMedia;
 
                     return {
-                        height: !this.isActive ? this.$el.offsetHeight : height$$1,
+                        height: height$$1,
                         margins: css(this.$el, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])
                     };
                 },
@@ -7742,13 +7781,13 @@
         },
 
         data: {
-            connect: '~.uk-switcher',
+            connect: '~.persosa-uk-switcher',
             toggle: '> *',
             active: 0,
             swiping: true,
-            cls: 'uk-active',
-            clsContainer: 'uk-switcher',
-            attrItem: 'uk-switcher-item',
+            cls: 'persosa-uk-active',
+            clsContainer: 'persosa-uk-switcher',
+            attrItem: 'persosa-uk-switcher-item',
             queued: true
         },
 
@@ -7775,7 +7814,7 @@
                 name: 'click',
 
                 delegate: function() {
-                    return ((this.toggle) + ":not(.uk-disabled)");
+                    return ((this.toggle) + ":not(.persosa-uk-disabled)");
                 },
 
                 handler: function(e) {
@@ -7855,7 +7894,7 @@
                 var toggle, next = getIndex(item, this.toggles, prev);
 
                 for (var i = 0; i < length; i++, next = (next + dir + length) % length) {
-                    if (!matches(this$1.toggles[next], '.uk-disabled, [disabled]')) {
+                    if (!matches(this$1.toggles[next], '.persosa-uk-disabled, [disabled]')) {
                         toggle = this$1.toggles[next];
                         break;
                     }
@@ -7896,15 +7935,15 @@
 
         data: {
             media: 960,
-            attrItem: 'uk-tab-item'
+            attrItem: 'persosa-uk-tab-item'
         },
 
         connected: function() {
 
-            var cls = hasClass(this.$el, 'uk-tab-left')
-                ? 'uk-tab-left'
-                : hasClass(this.$el, 'uk-tab-right')
-                    ? 'uk-tab-right'
+            var cls = hasClass(this.$el, 'persosa-uk-tab-left')
+                ? 'persosa-uk-tab-left'
+                : hasClass(this.$el, 'persosa-uk-tab-right')
+                    ? 'persosa-uk-tab-right'
                     : false;
 
             if (cls) {
@@ -8026,60 +8065,60 @@
 
     };
 
-    function core (UIkit) {
+    function core (persosa-ukUIkit) {
 
         // core components
-        UIkit.component('accordion', Accordion);
-        UIkit.component('alert', Alert);
-        UIkit.component('cover', Cover);
-        UIkit.component('drop', Drop);
-        UIkit.component('dropdown', Dropdown);
-        UIkit.component('formCustom', FormCustom);
-        UIkit.component('gif', Gif);
-        UIkit.component('grid', Grid);
-        UIkit.component('heightMatch', HeightMatch);
-        UIkit.component('heightViewport', HeightViewport);
-        UIkit.component('icon', Icon);
-        UIkit.component('img', Img);
-        UIkit.component('leader', Leader);
-        UIkit.component('margin', Margin);
-        UIkit.component('modal', Modal$1);
-        UIkit.component('nav', Nav);
-        UIkit.component('navbar', Navbar);
-        UIkit.component('offcanvas', Offcanvas);
-        UIkit.component('overflowAuto', OverflowAuto);
-        UIkit.component('responsive', Responsive);
-        UIkit.component('scroll', Scroll);
-        UIkit.component('scrollspy', Scrollspy);
-        UIkit.component('scrollspyNav', ScrollspyNav);
-        UIkit.component('sticky', Sticky);
-        UIkit.component('svg', SVG);
-        UIkit.component('switcher', Switcher);
-        UIkit.component('tab', Tab);
-        UIkit.component('toggle', Toggle);
-        UIkit.component('video', Video);
+        persosa-ukUIkit.component('accordion', Accordion);
+        persosa-ukUIkit.component('alert', Alert);
+        persosa-ukUIkit.component('cover', Cover);
+        persosa-ukUIkit.component('drop', Drop);
+        persosa-ukUIkit.component('dropdown', Dropdown);
+        persosa-ukUIkit.component('formCustom', FormCustom);
+        persosa-ukUIkit.component('gif', Gif);
+        persosa-ukUIkit.component('grid', Grid);
+        persosa-ukUIkit.component('heightMatch', HeightMatch);
+        persosa-ukUIkit.component('heightViewport', HeightViewport);
+        persosa-ukUIkit.component('icon', Icon);
+        persosa-ukUIkit.component('img', Img);
+        persosa-ukUIkit.component('leader', Leader);
+        persosa-ukUIkit.component('margin', Margin);
+        persosa-ukUIkit.component('modal', Modal$1);
+        persosa-ukUIkit.component('nav', Nav);
+        persosa-ukUIkit.component('navbar', Navbar);
+        persosa-ukUIkit.component('offcanvas', Offcanvas);
+        persosa-ukUIkit.component('overflowAuto', OverflowAuto);
+        persosa-ukUIkit.component('responsive', Responsive);
+        persosa-ukUIkit.component('scroll', Scroll);
+        persosa-ukUIkit.component('scrollspy', Scrollspy);
+        persosa-ukUIkit.component('scrollspyNav', ScrollspyNav);
+        persosa-ukUIkit.component('sticky', Sticky);
+        persosa-ukUIkit.component('svg', SVG);
+        persosa-ukUIkit.component('switcher', Switcher);
+        persosa-ukUIkit.component('tab', Tab);
+        persosa-ukUIkit.component('toggle', Toggle);
+        persosa-ukUIkit.component('video', Video);
 
         // Icon components
-        UIkit.component('close', Close);
-        UIkit.component('marker', IconComponent);
-        UIkit.component('navbarToggleIcon', IconComponent);
-        UIkit.component('overlayIcon', IconComponent);
-        UIkit.component('paginationNext', IconComponent);
-        UIkit.component('paginationPrevious', IconComponent);
-        UIkit.component('searchIcon', Search);
-        UIkit.component('slidenavNext', Slidenav);
-        UIkit.component('slidenavPrevious', Slidenav);
-        UIkit.component('spinner', Spinner);
-        UIkit.component('totop', IconComponent);
+        persosa-ukUIkit.component('close', Close);
+        persosa-ukUIkit.component('marker', IconComponent);
+        persosa-ukUIkit.component('navbarToggleIcon', IconComponent);
+        persosa-ukUIkit.component('overlayIcon', IconComponent);
+        persosa-ukUIkit.component('paginationNext', IconComponent);
+        persosa-ukUIkit.component('paginationPrevious', IconComponent);
+        persosa-ukUIkit.component('searchIcon', Search);
+        persosa-ukUIkit.component('slidenavNext', Slidenav);
+        persosa-ukUIkit.component('slidenavPrevious', Slidenav);
+        persosa-ukUIkit.component('spinner', Spinner);
+        persosa-ukUIkit.component('totop', IconComponent);
 
         // core functionality
-        UIkit.use(Core);
+        persosa-ukUIkit.use(Core);
 
     }
 
-    UIkit.version = '3.0.0-rc.17';
+    persosa-ukUIkit.version = '3.0.0-rc.17';
 
-    core(UIkit);
+    core(persosa-ukUIkit);
 
     var Countdown = {
 
@@ -8092,7 +8131,7 @@
 
         data: {
             date: '',
-            clsWrapper: '.uk-countdown-%unit%'
+            clsWrapper: '.persosa-uk-countdown-%unit%'
         },
 
         computed: {
@@ -8249,7 +8288,7 @@
         };
     }
 
-    var targetClass = 'uk-animation-target';
+    var targetClass = 'persosa-uk-animation-target';
 
     var Animate = {
 
@@ -8412,8 +8451,8 @@
         data: {
             target: null,
             selActive: false,
-            attrItem: 'uk-filter-control',
-            cls: 'uk-active',
+            attrItem: 'persosa-uk-filter-control',
+            cls: 'persosa-uk-active',
             animation: 250
         },
 
@@ -9165,7 +9204,7 @@
                     html(this.nav, this.slides.map(function (_, i) { return ("<li " + (this$1.attrItem) + "=\"" + i + "\"><a href=\"#\"></a></li>"); }).join(''));
                 }
 
-                toggleClass($$(this.navItemSelector, this.$el).concat(this.nav), 'uk-hidden', !this.maxIndex);
+                toggleClass($$(this.navItemSelector, this.$el).concat(this.nav), 'persosa-uk-hidden', !this.maxIndex);
 
                 this.updateNav();
 
@@ -9214,7 +9253,7 @@
                     var cmd = data(el, this$1.attrItem);
 
                     toggleClass(el, this$1.clsActive, toNumber(cmd) === i);
-                    toggleClass(el, 'uk-invisible', this$1.finite && (cmd === 'previous' && i === 0 || cmd === 'next' && i >= this$1.maxIndex));
+                    toggleClass(el, 'persosa-uk-invisible', this$1.finite && (cmd === 'previous' && i === 0 || cmd === 'next' && i >= this$1.maxIndex));
                 });
 
             }
@@ -9242,7 +9281,7 @@
             index: 0,
             stack: [],
             percent: 0,
-            clsActive: 'uk-active',
+            clsActive: 'persosa-uk-active',
             clsActivated: false,
             Transitioner: false,
             transitionOptions: {}
@@ -9465,7 +9504,7 @@
 
         data: {
             animation: 'slide',
-            clsActivated: 'uk-transition-active',
+            clsActivated: 'persosa-uk-transition-active',
             Animations: Animations,
             Transitioner: Transitioner
         },
@@ -9537,15 +9576,15 @@
             videoAutoplay: false,
             delayControls: 3000,
             items: [],
-            cls: 'uk-open',
-            clsPage: 'uk-lightbox-page',
-            selList: '.uk-lightbox-items',
-            attrItem: 'uk-lightbox-item',
-            selClose: '.uk-close-large',
+            cls: 'persosa-uk-open',
+            clsPage: 'persosa-uk-lightbox-page',
+            selList: '.persosa-uk-lightbox-items',
+            attrItem: 'persosa-uk-lightbox-item',
+            selClose: '.persosa-uk-close-large',
             pauseOnHover: false,
             velocity: 2,
             Animations: Animations$1,
-            template: "<div class=\"uk-lightbox uk-overflow-hidden\"> <ul class=\"uk-lightbox-items\"></ul> <div class=\"uk-lightbox-toolbar uk-position-top uk-text-right uk-transition-slide-top uk-transition-opaque\"> <button class=\"uk-lightbox-toolbar-icon uk-close-large\" type=\"button\" uk-close></button> </div> <a class=\"uk-lightbox-button uk-position-center-left uk-position-medium uk-transition-fade\" href=\"#\" uk-slidenav-previous uk-lightbox-item=\"previous\"></a> <a class=\"uk-lightbox-button uk-position-center-right uk-position-medium uk-transition-fade\" href=\"#\" uk-slidenav-next uk-lightbox-item=\"next\"></a> <div class=\"uk-lightbox-toolbar uk-lightbox-caption uk-position-bottom uk-text-center uk-transition-slide-bottom uk-transition-opaque\"></div> </div>"
+            template: "<div class=\"persosa-uk-lightbox persosa-uk-overflow-hidden\"> <ul class=\"persosa-uk-lightbox-items\"></ul> <div class=\"persosa-uk-lightbox-toolbar persosa-uk-position-top persosa-uk-text-right persosa-uk-transition-slide-top persosa-uk-transition-opaque\"> <button class=\"persosa-uk-lightbox-toolbar-icon persosa-uk-close-large\" type=\"button\" persosa-uk-close></button> </div> <a class=\"persosa-uk-lightbox-button persosa-uk-position-center-left persosa-uk-position-medium persosa-uk-transition-fade\" href=\"#\" persosa-uk-slidenav-previous persosa-uk-lightbox-item=\"previous\"></a> <a class=\"persosa-uk-lightbox-button persosa-uk-position-center-right persosa-uk-position-medium persosa-uk-transition-fade\" href=\"#\" persosa-uk-slidenav-next persosa-uk-lightbox-item=\"next\"></a> <div class=\"persosa-uk-lightbox-toolbar persosa-uk-lightbox-caption persosa-uk-position-bottom persosa-uk-text-center persosa-uk-transition-slide-bottom persosa-uk-transition-opaque\"></div> </div>"
         }); },
 
         created: function() {
@@ -9554,7 +9593,7 @@
 
             this.$mount(append(this.container, this.template));
 
-            this.caption = $('.uk-lightbox-caption', this.$el);
+            this.caption = $('.persosa-uk-lightbox-caption', this.$el);
 
             this.items.forEach(function () { return append(this$1.list, '<li></li>'); });
 
@@ -9593,7 +9632,11 @@
 
                 self: true,
 
-                handler: 'showControls'
+                handler: function() {
+                    this.startAutoplay();
+                    this.showControls();
+                }
+
             },
 
             {
@@ -9604,6 +9647,7 @@
 
                 handler: function() {
 
+                    this.stopAutoplay();
                     this.hideControls();
 
                     removeClass(this.slides, this.clsActive);
@@ -9706,7 +9750,7 @@
                     var type = item.type;
                     var alt = item.alt;
 
-                    this.setItem(item, '<span uk-spinner></span>');
+                    this.setItem(item, '<span persosa-uk-spinner></span>');
 
                     if (!source) {
                         return;
@@ -9725,7 +9769,7 @@
                         // Video
                     } else if (type === 'video' || source.match(/\.(mp4|webm|ogv)($|\?)/i)) {
 
-                        var video = $(("<video controls playsinline" + (item.poster ? (" poster=\"" + (item.poster) + "\"") : '') + " uk-video=\"" + (this.videoAutoplay) + "\"></video>"));
+                        var video = $(("<video controls playsinline" + (item.poster ? (" poster=\"" + (item.poster) + "\"") : '') + " persosa-uk-video=\"" + (this.videoAutoplay) + "\"></video>"));
                         attr(video, 'src', source);
 
                         on(video, 'error', function () { return this$1.setError(item); });
@@ -9737,7 +9781,7 @@
                         // Iframe
                     } else if (type === 'iframe' || source.match(/\.(html|php)($|\?)/i)) {
 
-                        this.setItem(item, ("<iframe class=\"uk-lightbox-iframe\" src=\"" + source + "\" frameborder=\"0\" allowfullscreen></iframe>"));
+                        this.setItem(item, ("<iframe class=\"persosa-uk-lightbox-iframe\" src=\"" + source + "\" frameborder=\"0\" allowfullscreen></iframe>"));
 
                         // YouTube
                     } else if ((matches$$1 = source.match(/\/\/.*?youtube(-nocookie)?\.[a-z]+\/watch\?v=([^&\s]+)/) || source.match(/()youtu\.be\/(.*)/))) {
@@ -9825,7 +9869,7 @@
             },
 
             setError: function(item) {
-                this.setItem(item, '<span uk-icon="icon: bolt; ratio: 2"></span>');
+                this.setItem(item, '<span persosa-uk-icon="icon: bolt; ratio: 2"></span>');
             },
 
             showControls: function() {
@@ -9833,12 +9877,12 @@
                 clearTimeout(this.controlsTimer);
                 this.controlsTimer = setTimeout(this.hideControls, this.delayControls);
 
-                addClass(this.$el, 'uk-active', 'uk-transition-active');
+                addClass(this.$el, 'persosa-uk-active', 'persosa-uk-transition-active');
 
             },
 
             hideControls: function() {
-                removeClass(this.$el, 'uk-active', 'uk-transition-active');
+                removeClass(this.$el, 'persosa-uk-active', 'persosa-uk-transition-active');
             }
 
         }
@@ -9846,7 +9890,7 @@
     };
 
     function getIframe(src, width$$1, height$$1, autoplay) {
-        return ("<iframe src=\"" + src + "\" width=\"" + width$$1 + "\" height=\"" + height$$1 + "\" style=\"max-width: 100%; box-sizing: border-box;\" frameborder=\"0\" allowfullscreen uk-video=\"autoplay: " + autoplay + "\" uk-responsive></iframe>");
+        return ("<iframe src=\"" + src + "\" width=\"" + width$$1 + "\" height=\"" + height$$1 + "\" style=\"max-width: 100%; box-sizing: border-box;\" frameborder=\"0\" allowfullscreen persosa-uk-video=\"autoplay: " + autoplay + "\" persosa-uk-responsive></iframe>");
     }
 
     var Lightbox = {
@@ -9878,7 +9922,7 @@
                 name: 'click',
 
                 delegate: function() {
-                    return ((this.toggle) + ":not(.uk-disabled)");
+                    return ((this.toggle) + ":not(.persosa-uk-disabled)");
                 },
 
                 handler: function(e) {
@@ -9951,15 +9995,15 @@
             && listA.every(function (el, i) { return el === listB[i]; });
     }
 
-    function install$2(UIkit, Lightbox) {
+    function install$2(persosa-ukUIkit, Lightbox) {
 
-        if (!UIkit.lightboxPanel) {
-            UIkit.component('lightboxPanel', LightboxPanel);
+        if (!persosa-ukUIkit.lightboxPanel) {
+            persosa-ukUIkit.component('lightboxPanel', LightboxPanel);
         }
 
         assign(
             Lightbox.props,
-            UIkit.component('lightboxPanel').options.props
+            persosa-ukUIkit.component('lightboxPanel').options.props
         );
 
     }
@@ -9980,8 +10024,8 @@
             timeout: 5000,
             group: null,
             pos: 'top-center',
-            clsClose: 'uk-notification-close',
-            clsMsg: 'uk-notification-message'
+            clsClose: 'persosa-uk-notification-close',
+            clsMsg: 'persosa-uk-notification-message'
         },
 
         install: install$3,
@@ -9989,13 +10033,13 @@
         created: function() {
 
             if (!containers[this.pos]) {
-                containers[this.pos] = append(this.$container, ("<div class=\"uk-notification uk-notification-" + (this.pos) + "\"></div>"));
+                containers[this.pos] = append(this.$container, ("<div class=\"persosa-uk-notification persosa-uk-notification-" + (this.pos) + "\"></div>"));
             }
 
             var container = css(containers[this.pos], 'display', 'block');
 
             this.$mount(append(container,
-                ("<div class=\"" + (this.clsMsg) + (this.status ? (" " + (this.clsMsg) + "-" + (this.status)) : '') + "\"> <a href=\"#\" class=\"" + (this.clsClose) + "\" data-uk-close></a> <div>" + (this.message) + "</div> </div>")
+                ("<div class=\"" + (this.clsMsg) + (this.status ? (" " + (this.clsMsg) + "-" + (this.status)) : '') + "\"> <a href=\"#\" class=\"" + (this.clsClose) + "\" data-persosa-uk-close></a> <div>" + (this.message) + "</div> </div>")
             ));
 
         },
@@ -10071,10 +10115,10 @@
 
     };
 
-    function install$3(UIkit) {
-        UIkit.notification.closeAll = function (group, immediate) {
+    function install$3(persosa-ukUIkit) {
+        persosa-ukUIkit.notification.closeAll = function (group, immediate) {
             apply(document.body, function (el) {
-                var notification = UIkit.getComponent(el, 'notification');
+                var notification = persosa-ukUIkit.getComponent(el, 'notification');
                 if (notification && (!group || group === notification.group)) {
                     notification.close(immediate);
                 }
@@ -10198,52 +10242,41 @@
 
                 data$$1.active = this.matchMedia;
 
-                data$$1.dimEl = {
-                    width: this.$el.offsetWidth,
-                    height: this.$el.offsetHeight
-                };
-
-                if ('image' in data$$1 || !this.covers || !this.bgProps.length) {
+                if (!data$$1.active) {
                     return;
                 }
 
-                var src = css(this.$el, 'backgroundImage').replace(/^none|url\(["']?(.+?)["']?\)$/, '$1');
+                if (!data$$1.image && this.covers && this.bgProps.length) {
+                    var src = css(this.$el, 'backgroundImage').replace(/^none|url\(["']?(.+?)["']?\)$/, '$1');
 
-                if (!src) {
-                    return;
+                    if (src) {
+                        var img = new Image();
+                        img.src = src;
+                        data$$1.image = img;
+
+                        if (!img.naturalWidth) {
+                            img.onload = function () { return this$1.$emit(); };
+                        }
+                    }
+
                 }
 
-                var img = new Image();
-                img.src = src;
-                data$$1.image = img;
-
-                if (!img.naturalWidth) {
-                    img.onload = function () { return this$1.$emit(); };
-                }
-            },
-
-            write: function(ref) {
-                var this$1 = this;
-                var dimEl = ref.dimEl;
-                var image = ref.image;
-                var active = ref.active;
-
+                var image = data$$1.image;
 
                 if (!image || !image.naturalWidth) {
                     return;
                 }
 
-                if (!active) {
-                    css(this.$el, {backgroundSize: '', backgroundRepeat: ''});
-                    return;
-                }
-
-                var imageDim = {
+                var dimEl = {
+                    width: this.$el.offsetWidth,
+                    height: this.$el.offsetHeight
+                };
+                var dimImage = {
                     width: image.naturalWidth,
                     height: image.naturalHeight
                 };
 
-                var dim = Dimensions.cover(imageDim, dimEl);
+                var dim = Dimensions.cover(dimImage, dimEl);
 
                 this.bgProps.forEach(function (prop) {
 
@@ -10269,10 +10302,23 @@
                         }
                     }
 
-                    dim = Dimensions.cover(imageDim, dimEl);
+                    dim = Dimensions.cover(dimImage, dimEl);
                 });
 
-                css(this.$el, {
+                data$$1.dim = dim;
+            },
+
+            write: function(ref) {
+                var dim = ref.dim;
+                var active = ref.active;
+
+
+                if (!active) {
+                    css(this.$el, {backgroundSize: '', backgroundRepeat: ''});
+                    return;
+                }
+
+                dim && css(this.$el, {
                     backgroundSize: ((dim.width) + "px " + (dim.height) + "px"),
                     backgroundRepeat: 'no-repeat'
                 });
@@ -10701,10 +10747,10 @@
         data: {
             center: false,
             sets: false,
-            attrItem: 'uk-slider-item',
-            selList: '.uk-slider-items',
-            selNav: '.uk-slider-nav',
-            clsContainer: 'uk-slider-container',
+            attrItem: 'persosa-uk-slider-item',
+            selList: '.persosa-uk-slider-items',
+            selNav: '.persosa-uk-slider-nav',
+            clsContainer: 'persosa-uk-slider-container',
             Transitioner: Transitioner$1
         },
 
@@ -10814,7 +10860,7 @@
 
                 $$(("[" + (this.attrItem) + "],[data-" + (this.attrItem) + "]"), this.$el).forEach(function (el) {
                     var index$$1 = data(el, this$1.attrItem);
-                    this$1.maxIndex && toggleClass(el, 'uk-hidden', isNumeric(index$$1) && (this$1.sets && !includes(this$1.sets, toFloat(index$$1)) || index$$1 > this$1.maxIndex));
+                    this$1.maxIndex && toggleClass(el, 'persosa-uk-hidden', isNumeric(index$$1) && (this$1.sets && !includes(this$1.sets, toFloat(index$$1)) || index$$1 > this$1.maxIndex));
                 });
 
             },
@@ -11195,9 +11241,9 @@
             ratio: '16:9',
             minHeight: false,
             maxHeight: false,
-            selList: '.uk-slideshow-items',
-            attrItem: 'uk-slideshow-item',
-            selNav: '.uk-slideshow-nav',
+            selList: '.persosa-uk-slideshow-items',
+            attrItem: 'persosa-uk-slideshow-item',
+            selNav: '.persosa-uk-slideshow-nav',
             Animations: Animations$2
         },
 
@@ -11257,13 +11303,13 @@
         data: {
             group: false,
             threshold: 5,
-            clsItem: 'uk-sortable-item',
-            clsPlaceholder: 'uk-sortable-placeholder',
-            clsDrag: 'uk-sortable-drag',
-            clsDragState: 'uk-drag',
-            clsBase: 'uk-sortable',
-            clsNoDrag: 'uk-sortable-nodrag',
-            clsEmpty: 'uk-sortable-empty',
+            clsItem: 'persosa-uk-sortable-item',
+            clsPlaceholder: 'persosa-uk-sortable-placeholder',
+            clsDrag: 'persosa-uk-sortable-drag',
+            clsDragState: 'persosa-uk-drag',
+            clsBase: 'persosa-uk-sortable',
+            clsNoDrag: 'persosa-uk-sortable-nodrag',
+            clsEmpty: 'persosa-uk-sortable-empty',
             clsCustom: '',
             handle: false
         },
@@ -11364,7 +11410,7 @@
                     width: this.placeholder.offsetWidth,
                     height: this.placeholder.offsetHeight
                 }, css(this.placeholder, ['paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom'])));
-                attr(this.drag, 'uk-no-boot', '');
+                attr(this.drag, 'persosa-uk-no-boot', '');
                 addClass(this.drag, this.clsDrag, this.clsCustom);
 
                 height(this.drag.firstElementChild, height(this.placeholder.firstElementChild));
@@ -11546,10 +11592,10 @@
             pos: 'top',
             title: '',
             delay: 0,
-            animation: ['uk-animation-scale-up'],
+            animation: ['persosa-uk-animation-scale-up'],
             duration: 100,
-            cls: 'uk-active',
-            clsPos: 'uk-tooltip'
+            cls: 'persosa-uk-active',
+            clsPos: 'persosa-uk-tooltip'
         },
 
         beforeConnect: function() {
@@ -11661,7 +11707,7 @@
 
         data: {
             allow: false,
-            clsDragover: 'uk-dragover',
+            clsDragover: 'persosa-uk-dragover',
             concurrent: 1,
             maxSize: 0,
             method: 'POST',
@@ -11842,24 +11888,24 @@
         e.stopPropagation();
     }
 
-    UIkit.component('countdown', Countdown);
-    UIkit.component('filter', Filter);
-    UIkit.component('lightbox', Lightbox);
-    UIkit.component('lightboxPanel', LightboxPanel);
-    UIkit.component('notification', Notification);
-    UIkit.component('parallax', Parallax$1);
-    UIkit.component('slider', Slider$1);
-    UIkit.component('sliderParallax', SliderParallax);
-    UIkit.component('slideshow', Slideshow$1);
-    UIkit.component('slideshowParallax', SliderParallax);
-    UIkit.component('sortable', Sortable);
-    UIkit.component('tooltip', Tooltip);
-    UIkit.component('upload', Upload);
+    persosa-ukUIkit.component('countdown', Countdown);
+    persosa-ukUIkit.component('filter', Filter);
+    persosa-ukUIkit.component('lightbox', Lightbox);
+    persosa-ukUIkit.component('lightboxPanel', LightboxPanel);
+    persosa-ukUIkit.component('notification', Notification);
+    persosa-ukUIkit.component('parallax', Parallax$1);
+    persosa-ukUIkit.component('slider', Slider$1);
+    persosa-ukUIkit.component('sliderParallax', SliderParallax);
+    persosa-ukUIkit.component('slideshow', Slideshow$1);
+    persosa-ukUIkit.component('slideshowParallax', SliderParallax);
+    persosa-ukUIkit.component('sortable', Sortable);
+    persosa-ukUIkit.component('tooltip', Tooltip);
+    persosa-ukUIkit.component('upload', Upload);
 
     {
-        boot(UIkit);
+        boot(persosa-ukUIkit);
     }
 
-    return UIkit;
+    return persosa-ukUIkit;
 
 })));
